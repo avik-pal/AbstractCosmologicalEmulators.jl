@@ -23,4 +23,4 @@ Stable API | :construction: | WIP
 
 ## Authors
 
-- [Marco Bonici](https://www.marcobonici.com), PostoDoctoral Researcher at INAF-IASF Milano
+- [Marco Bonici](https://www.marcobonici.com), PostoDoctoral Researcher at Waterloo Centre for Astrophysics
