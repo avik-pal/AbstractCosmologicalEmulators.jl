@@ -2,6 +2,8 @@ using AbstractCosmologicalEmulators
 using JSON
 using SimpleChains
 using Test
+using ForwardDiff
+using Zygote
 
 m = 100
 n = 300
@@ -22,18 +24,25 @@ sc_emu = SimpleChainsEmulator(Architecture = mlpd, Weights = weights,
                               Description = Dict("emulator_description"=>
                               NN_dict["emulator_description"]))
 
+n = 1024
+A = randn(n)
+B = ones(n, 2)
+B[:,1] .*= 0.
+test_sum(A) = sum(abs2, maximin(A, B))
+test_suminv(A) = sum(abs2, inv_maximin(A, B))
+
 @testset "AbstractEmulators test" begin
     x = rand(m)
     y = rand(m, n)
 
     X = deepcopy(x)
     Y = deepcopy(y)
-    norm_x = maximin_input(x, InMinMax)
-    norm_y = maximin_input(y, InMinMax)
+    norm_x = maximin(x, InMinMax)
+    norm_y = maximin(y, InMinMax)
     @test any(norm_x .>=0 .&& norm_x .<=1)
     @test any(norm_y .>=0 .&& norm_y .<=1)
-    x = inv_maximin_output(norm_x, InMinMax)
-    y = inv_maximin_output(norm_y, InMinMax)
+    x = inv_maximin(norm_x, InMinMax)
+    y = inv_maximin(norm_y, InMinMax)
     @test any(x .== X)
     @test any(y .== Y)
     input = randn(6)
@@ -55,4 +64,6 @@ sc_emu = SimpleChainsEmulator(Architecture = mlpd, Weights = weights,
     @test_logs (:warn, "No emulator description found!") AbstractCosmologicalEmulators._get_emulator_description_dict(Dict("pippo" => "franco"))
     @test isapprox(run_emulator(input, sc_emu), run_emulator(input, lux_emu))
     @test get_emulator_description(sc_emu) == get_emulator_description(NN_dict["emulator_description"])
+    @test ForwardDiff.gradient(test_sum, A) ≈ Zygote.gradient(test_sum, A)[1]
+    @test ForwardDiff.gradient(test_suminv, A) ≈ Zygote.gradient(test_suminv, A)[1]
 end
