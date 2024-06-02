@@ -1,11 +1,29 @@
-function maximin_input(input, in_MinMax)
-    result = @views @.  (input - in_MinMax[:,1]) ./ (in_MinMax[:,2] - in_MinMax[:,1])
+function maximin(input, minmax)
+    result = @views @.  (input - minmax[:,1]) ./ (minmax[:,2] - minmax[:,1])
     return result
 end
 
-function inv_maximin_output(output, out_MinMax)
-    result = @views @. output .* (out_MinMax[:,2] - out_MinMax[:,1]) + out_MinMax[:,1]
+function ChainRulesCore.rrule(::typeof(maximin), input, minmax)
+    Y = maximin(input, minmax)
+    function maximin_pullback(Ȳ)
+        ∂input = @thunk(@views @.  Ȳ / (minmax[:,2] - minmax[:,1]))
+        return NoTangent(), ∂input, NoTangent()
+    end
+    return Y, maximin_pullback
+end
+
+function inv_maximin(input, minmax)
+    result = @views @. input * (minmax[:,2] - minmax[:,1]) + minmax[:,1]
     return result
+end
+
+function ChainRulesCore.rrule(::typeof(inv_maximin), input, minmax)
+    Y = inv_maximin(input, minmax)
+    function inv_maximin_pullback(Ȳ)
+        ∂input = @thunk(@views @.  Ȳ * (minmax[:,2] - minmax[:,1]))
+        return NoTangent(), ∂input, NoTangent()
+    end
+    return Y, inv_maximin_pullback
 end
 
 function get_emulator_description(input_dict::Dict)
