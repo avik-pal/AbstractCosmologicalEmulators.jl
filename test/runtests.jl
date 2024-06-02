@@ -3,6 +3,7 @@ using JSON
 using SimpleChains
 using Test
 using ForwardDiff
+using Zygote
 
 m = 100
 n = 300
