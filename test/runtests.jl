@@ -24,11 +24,11 @@ sc_emu = SimpleChainsEmulator(Architecture = mlpd, Weights = weights,
                               NN_dict["emulator_description"]))
 
 n = 1024
-X = randn(n)
-Y = ones(n, 2)
-Y[:,1] .*= 0.
-test_sum(X) = sum(abs2, maximin(X, Y))
-test_suminv(X) = sum(abs2, inv_maximin(X, Y))
+A = randn(n)
+B = ones(n, 2)
+B[:,1] .*= 0.
+test_sum(A) = sum(abs2, maximin(A, B))
+test_suminv(A) = sum(abs2, inv_maximin(A, B))
 
 @testset "AbstractEmulators test" begin
     x = rand(m)
@@ -63,6 +63,6 @@ test_suminv(X) = sum(abs2, inv_maximin(X, Y))
     @test_logs (:warn, "No emulator description found!") AbstractCosmologicalEmulators._get_emulator_description_dict(Dict("pippo" => "franco"))
     @test isapprox(run_emulator(input, sc_emu), run_emulator(input, lux_emu))
     @test get_emulator_description(sc_emu) == get_emulator_description(NN_dict["emulator_description"])
-    @test ForwardDiff.gradient(test_sum, X) ≈ Zygote.gradient(test_sum, X)[1]
-    @test ForwardDiff.gradient(test_suminv, X) ≈ Zygote.gradient(test_suminv, X)[1]
+    @test ForwardDiff.gradient(test_sum, A) ≈ Zygote.gradient(test_sum, A)[1]
+    @test ForwardDiff.gradient(test_suminv, A) ≈ Zygote.gradient(test_suminv, A)[1]
 end
