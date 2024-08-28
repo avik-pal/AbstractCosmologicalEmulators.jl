@@ -8,18 +8,19 @@
 
 `AbstractCosmologicalEmulators.jl` is the central `Julia` package within the the [CosmologicalEmulators](https://github.com/CosmologicalEmulators) Github organization, which defines methods and structs used by the other packages hosted by the organization.
 
-In this moment the emulators here used are based only on the [`SimpleChains.jl`](https://github.com/PumasAI/SimpleChains.jl) library, whose performance is excellent on the CPU for the kind of small neural networks (NN) that we employ. We plan to include other frameworks, such as [`Lux.jl`](https://github.com/LuxDL/Lux.jl), in order to support models running on the GPU. If you want include a new NN/GP framework, feel free to open a PR or get in touch with us.
+In this moment the emulators here used are based only on the [`SimpleChains.jl`](https://github.com/PumasAI/SimpleChains.jl) and [`Lux.jl`](https://github.com/LuxDL/Lux.jl) libraries. If you want include a new NN/GP framework, feel free to open a PR or get in touch with us.
 
 ## Roadmap to v1.0.0
 
 Step | Status| Comment
 :------------ | :-------------| :-------------
 Interface with `SimpleChains.jl` | :heavy_check_mark: | Implemented
-Support for vectorization | :heavy_check_mark: | Implemented
 Interface with `Lux.jl` | :heavy_check_mark: | Implemented
-AD Rules | :heavy_check_mark: | Implemented
+Support for vectorization | :heavy_check_mark: | Implemented
+AD Rules `ChainRules` | :heavy_check_mark: | Implemented
 Robust emulators initialization | :heavy_check_mark: | Implemented, needs some polishing
-GPU support | :construction: | Work in progress
+GPU support | :heavy_check_mark: | Implemented, needs some polishing
+Gaussian Process support | :construction: | Work in progress
 Stable API | :construction: | Work in progress
 
 ## Authors
