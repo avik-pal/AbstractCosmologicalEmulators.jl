@@ -32,5 +32,5 @@ function get_emulator_description(emu::AbstractTrainedEmulators)
     catch
         @warn "No emulator description found!"
     end
-
+    return nothing
 end
