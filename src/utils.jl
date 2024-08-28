@@ -30,7 +30,7 @@ function get_emulator_description(emu::AbstractTrainedEmulators)
     try
         get_emulator_description(emu.Description["emulator_description"])
     catch
-        @warn "No emulator description present!"
+        @warn "No emulator description found!"
     end
 
 end
