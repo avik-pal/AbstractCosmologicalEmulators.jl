@@ -97,13 +97,7 @@ function _get_lux_params_states(NN_dict::Dict, weights)
 end
 
 function _get_emulator_description_dict(input_dict::Dict)
-    if haskey(input_dict, "emulator_description")
-        nn_descript = input_dict["emulator_description"]
-    else
-        nn_descript = Dict()
-        @warn "No emulator description found!"
-    end
-    return nn_descript
+    return input_dict["emulator_description"]
 end
 
 function _init_luxemulator(NN_dict::Dict, weight)
