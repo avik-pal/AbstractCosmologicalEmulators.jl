@@ -8,7 +8,7 @@
 
 `AbstractCosmologicalEmulators.jl` is the central `Julia` package within the the [CosmologicalEmulators](https://github.com/CosmologicalEmulators) Github organization, which defines methods and structs used by the other packages hosted by the organization.
 
-In this moment the emulators here used are based only on the [`SimpleChains.jl`](https://github.com/PumasAI/SimpleChains.jl) and [`Lux.jl`](https://github.com/LuxDL/Lux.jl) libraries. If you want include a new NN/GP framework, feel free to open a PR or get in touch with us.
+In this moment the emulators here used are based only on the [`SimpleChains.jl`](https://github.com/PumasAI/SimpleChains.jl) and [`Lux.jl`](https://github.com/LuxDL/Lux.jl) libraries. If you want include a new NN/GP framework, feel free to open a PR and/or get in touch with us.
 
 ## Roadmap to v1.0.0
 
