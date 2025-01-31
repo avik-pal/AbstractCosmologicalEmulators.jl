@@ -65,6 +65,6 @@ test_suminv(A) = sum(abs2, inv_maximin(A, B))
     @test get_emulator_description(sc_emu) == get_emulator_description(NN_dict["emulator_description"])
     @test ForwardDiff.gradient(test_sum, A) ≈ Zygote.gradient(test_sum, A)[1]
     @test ForwardDiff.gradient(test_suminv, A) ≈ Zygote.gradient(test_suminv, A)[1]
-    sc_emu.Description["emulator_description"] = Dict()
+    sc_emu.Description = Dict()
     @test_logs (:warn, "No emulator description found!") AbstractCosmologicalEmulators.get_emulator_description(sc_emu)
 end
